@@ -1,0 +1,57 @@
+﻿@model EditarRolModelo
+
+@{
+    ViewBag.Title = "Editar Rol";
+}
+
+<h1>Editar Rol</h1>
+
+<form method="post" class="mt-3">
+    <div class="form-group row">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Nombre" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Nombre" class="form-control" />
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" style="width:auto">Editar</button>
+            <a asp-action="ListarRoles" class="btn btn-primary" style="width:auto">Cancelar</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Usuarios en este rol</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Usuarios.Any())
+            {
+                foreach (var item in Model.Usuarios)
+                {
+                    <h5 class="card-title">@item</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">Ninguno por ahora</h5>
+            }
+        </div>
+
+        <div class="card-footer">
+            <a style="width:auto" asp-controller="Rol"  asp-action="EditarUsuarioRol" asp-route-id="@Model.Id" class="btn btn-primary">Crear o Borrar Usuario</a>
+        </div>
+    </div>
+
+</form>

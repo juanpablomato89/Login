@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrador") || User.IsInRole("Vendedor")))
+    {
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    }
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrador") || User.IsInRole("Vendedor")))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a> 
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                            }
+                            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a>
+                            <a asp-controller="Producto" asp-action="Comprar" asp-route-id="@item.ID" class="btn btn-primary">Comprar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+          
+        </tbody>
+    </table>
